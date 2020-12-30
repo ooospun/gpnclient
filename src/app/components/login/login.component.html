@@ -1,0 +1,17 @@
+<div class="login-form-flex">
+  <mat-card>
+    <p>
+      <mat-form-field>
+        <mat-label>Электронная почта</mat-label>
+        <input type="email" matInput placeholder="user@email.com" #email required>
+      </mat-form-field>
+    </p>
+    <p>
+      <mat-form-field>
+        <mat-label>Пароль</mat-label>
+        <input type="password" matInput #password>
+      </mat-form-field>
+    </p>
+    <button mat-flat-button color="primary" (click)="login(email.value, password.value)">Войти</button>
+  </mat-card>
+</div>

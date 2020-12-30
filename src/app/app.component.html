@@ -1,0 +1,11 @@
+<mat-toolbar>
+  <span>Центр учета индикаторов</span>
+  <span class="example-spacer"></span>
+  <button mat-icon-button  color="primary" aria-label="Войти" routerLink="/login">
+    <mat-icon>login</mat-icon>
+  </button>
+  <button mat-icon-button color="accent" aria-label="Выйти" (click)="logout()" *ngIf="isLoggedIn">
+    <mat-icon>logout</mat-icon>
+  </button>
+</mat-toolbar>
+<router-outlet></router-outlet>

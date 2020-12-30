@@ -1,0 +1,111 @@
+
+<form [formGroup]="form"
+
+>
+ <h1 mat-dialog-title>
+    <strong *ngIf="data.oper==='entry_oper'">Добавить индикатор</strong>
+    <strong *ngIf="data.oper==='edit_oper'">Изменить индикатор</strong>
+    <strong *ngIf="data.oper==='delete_oper'">Удалить индикатор</strong>
+    <strong *ngIf="data.oper==='view_oper'">Просмотр индикатора</strong>
+  </h1>
+  <div mat-dialog-content class="example-container">
+    <mat-form-field class="example-full-width">
+      <input id = "id" matInput placeholder="Код индикатора" disabled value={{data.indicator.id}}>
+    </mat-form-field>
+
+    <mat-form-field class="example-full-width">
+      <input id="title"
+             minlength="5" maxlength="250" required
+             formControlName="title"
+             matInput placeholder="Наименование"
+             [(ngModel)]="data.indicator.title"
+             >
+      <mat-error *ngIf="form.get('title').invalid && (form.get('title').dirty || form.get('title').touched)">
+        <div *ngIf="form.get('title').errors.required">
+          Наименование не может быть пустым.
+        </div>
+        <div *ngIf="form.get('title').errors.minlength">
+          Наименование не может быть короче {{form.get('title').errors.minlength.requiredLength}} символов.
+        </div>
+        <div *ngIf="form.get('title').errors.maxlength">
+          Наименование не может быть длинее {{form.get('title').errors.maxlength.requiredLength}} символов.
+        </div>
+      </mat-error>
+    </mat-form-field>
+
+    <mat-form-field class="example-margin">
+      <mat-label>Минимальное значение</mat-label>
+      <input id="minValue"
+             min="0" max="5000" required
+             formControlName="minValue"
+             matInput
+             type="number"
+             [(ngModel)]="data.indicator.minValue"
+             >
+      <mat-error *ngIf="form.get('minValue').invalid && (form.get('minValue').dirty || form.get('minValue').touched)">
+        <div *ngIf="form.get('minValue').errors.required">
+          Минимальное значение не может быть пустым.
+        </div>
+        <div *ngIf="form.get('minValue').errors.min">
+          Минимальное значение не может быть < {{form.get('minValue').errors.min.min}}.
+        </div>
+        <div *ngIf="form.get('minValue').errors.max">
+          Минимальное значение не может быть > {{form.get('minValue').errors.max.max}}.
+        </div>
+      </mat-error>
+    </mat-form-field>
+    <mat-form-field class="example-margin">
+      <mat-label>Максимальное значение</mat-label>
+      <input id="maxValue"
+             [min]="0" [max]="5000" required
+             formControlName="maxValue"
+             matInput type="number" [(ngModel)]="data.indicator.maxValue"
+             >
+      <mat-error *ngIf="form.get('maxValue').invalid && (form.get('maxValue').dirty || form.get('maxValue').touched)">
+        <div *ngIf="form.get('maxValue').errors.required">
+          Максимальное значение не может быть пустым.
+        </div>
+        <div *ngIf="form.get('maxValue').errors.min">
+          Максимальное значение не может быть < {{form.get('maxValue').errors.min.min}}.
+        </div>
+        <div *ngIf="form.get('maxValue').errors.max">
+          Максимальное значение не может быть > {{form.get('maxValue').errors.max.max}}.
+        </div>
+      </mat-error>
+    </mat-form-field>
+
+    <mat-form-field class="example-margin">
+      <mat-label>Значение</mat-label>
+      <input id="value"
+             [min]="data.indicator.minValue" [max]="data.indicator.maxValue" required
+             formControlName="value"
+             matInput type="number"
+             [(ngModel)]="data.indicator.value"
+             >
+      <mat-error *ngIf="form.get('value').invalid && (form.get('value').dirty || form.get('value').touched)">
+        <div *ngIf="form.get('value').errors.required">
+          Значение не может быть пустым.
+        </div>
+        <div *ngIf="form.get('value').errors.min">
+          Значение не может быть < {{data.indicator.minValue}}.
+        </div>
+        <div *ngIf="form.get('value').errors.max">
+          Значение не может быть > {{data.indicator.maxValue}}.
+        </div>
+      </mat-error>
+    </mat-form-field>
+
+  </div>
+
+  <div mat-dialog-actions>
+    <button mat-button color="warn" (click)="onClose()" cdkFocusInitial>
+      <mat-icon>clear</mat-icon>
+      <strong>Отменить</strong>
+    </button>
+    <button [disabled]="form.invalid"  type="submit" mat-button color="primary" (click)="onSave()" *ngIf="data.oper!='view_oper'">
+      <mat-icon>save</mat-icon>
+      <strong *ngIf="data.oper!='delete_oper'">Сохранить</strong>
+      <strong *ngIf="data.oper==='delete_oper'">Удалить</strong>
+    </button>
+  </div>
+</form>
